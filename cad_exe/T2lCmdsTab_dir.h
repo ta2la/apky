@@ -46,5 +46,7 @@ public:
     static QString getImages_(const QString& dirStr);
     static bool    alreadyUsed_(const QString& dirStr);
 //<DATA>
+private:
+    static QString currentDirGet();
     static QString currentDir_;
 };

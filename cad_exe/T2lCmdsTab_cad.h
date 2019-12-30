@@ -31,8 +31,7 @@ class CmdsTab_cad
 //=============================================================================
 public:
 //<CMDS>
-    static int tab_set_areaanalyzer ( TcCmdContext* context, TcArgCol& args );
-    static int tab_set_cad ( TcCmdContext* context, TcArgCol& args );
+    CMD_FCE(tab_set_areaanalyzer);
     static int tab_set_toolbar ( TcCmdContext* context, TcArgCol& args );
     static int tab_set_acmd ( TcCmdContext* context, TcArgCol& args );
     static int tab_set_icmd ( TcCmdContext* context, TcArgCol& args );
@@ -43,8 +42,6 @@ public:
     static bool registerCmds_()
     {   TcCmd* cmd;
 
-        cmd = TcCmdEngine::engine().registerCmd( "tab_set_cad",     tab_set_cad,      "tab_set");
-        cmd->frontControllExclude();
         cmd = TcCmdEngine::engine().registerCmd( "tab_set_toolbar", tab_set_toolbar,  "tab_toolbar");
         cmd->frontControllExclude();
         cmd = TcCmdEngine::engine().registerCmd( "tab_set_acmd",    tab_set_acmd,     "tab_toolbar");

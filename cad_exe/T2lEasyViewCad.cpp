@@ -45,7 +45,7 @@
 
 #include <iostream>
 
-#include <QApplication>
+//#include <QApplication>
 #include <T2lEasyViewTab.h>
 
 using namespace T2l;

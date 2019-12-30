@@ -11,6 +11,7 @@ minicmds_exe/
 photo_map_exe/
 photo_plan_exe/
 recog_exe/
+cad_exe/documents
 *.1
 *.o
 *.stash

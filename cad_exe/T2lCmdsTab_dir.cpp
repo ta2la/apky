@@ -16,8 +16,8 @@
 
 // self
 #include "T2lCmdsTab_dir.h"
+
 #include "T2lFilesystem.h"
-//#include "T2lCmd_refed_file_list.h"
 
 // infrastructure
 #include "TcHtmlDir.h"
@@ -25,20 +25,28 @@
 #include "TcArgCol.h"
 #include "TcArgVal.h"
 #include "T2lGFileCol.h"
+#include "T2lStoredFileNames.h"
 
 // qt
 #include <QDir>
 #include <QDirIterator>
 
-// opencv
-//#include <opencv2/opencv.hpp>
-
 using namespace std;
 using namespace T2l;
 
 //=============================================================================
-QString CmdsTab_dir::currentDir_ = "C:/HOME/KADLUB/cvz/samples/cad/TEST";
+QString CmdsTab_dir::currentDir_ = "";
 
+//=============================================================================
+QString CmdsTab_dir::currentDirGet()
+{
+    if (currentDir_.isEmpty()) {
+        return StoredFileNames::getExeUpDir() + "/documents";
+    }
+    return currentDir_;
+}
+
+//=============================================================================
 bool CmdsTab_dir::alreadyUsed_(const QString& filePath)
 {
     QFileInfo fi(filePath);
@@ -71,16 +79,6 @@ QString CmdsTab_dir::getT2ls_(const QString& dirStr)
 
     for (int i = 0; i < list.size(); i++) {
         QFileInfo file(dirStr, list.at(i));
-
-        /*bool skip = false;
-        GFileCol& files = GFileCol::instance();
-        for ( int i = 0; i < files.count(); i++ ) {
-            if ( QFileInfo(files.get(i)->filePath()) != file ) continue;
-            skip = true;
-            break;
-        }
-
-        if (skip) continue;*/
 
         if ( alreadyUsed_(file.absoluteFilePath()) ) continue;
 
@@ -134,19 +132,12 @@ int CmdsTab_dir::tab_set_dir_browser(TcCmdContext* /*context*/, TcArgCol& /*args
     QString result;
 
     //QDir dir(Cmd_refed_file_list::currentDir());
-    QDir dir(currentDir_);
+    QDir dir(currentDirGet());
 
     result.append("<div class='dir_part1'>");
     result.append("<p>Current directory: <b>");
-    result.append(currentDir_.toStdString().c_str());
+    result.append(currentDirGet().toStdString().c_str());
     result.append("</b></p>");
-
-    /*result.append("<p>Favourites: ");
-    result.append("<a href='tcview:://#cad_set_actual_dir /home/petrtalla/Development/P4/pia/test/regression/test_cornertestengine/image'>");
-    result.append("regression/test_cornertestengine</a>&nbsp;&nbsp;");
-    result.append("<a href='tcview:://#cad_set_actual_dir /home/petrtalla/Development/P4/imagecol_corners'>");
-    result.append("imagecol_corners</a><br>");
-    result.append("</p>");*/
 
     result.append("<p>Subdirectories: ");
     QDirIterator dirIt(dir.absolutePath(), QDir::AllDirs | QDir::Dirs);
@@ -165,9 +156,9 @@ int CmdsTab_dir::tab_set_dir_browser(TcCmdContext* /*context*/, TcArgCol& /*args
     result.append("</p></div>");
 
     result.append("<div>");
-    result.append(getT2ls_(currentDir_));
+    result.append(getT2ls_(currentDirGet()));
     result.append("<br></div><div>");
-    result.append(getImages_(currentDir_));
+    result.append(getImages_(currentDirGet()));
     result.append("</div>");
 
     TcHtmlViewTabbed::mainView().tabSet("dir", result.toLatin1().data());
@@ -181,9 +172,8 @@ int CmdsTab_dir::cad_set_actual_dir(TcCmdContext* /*context*/, TcArgCol& args)
     if (args.count() < 2) return args.appendError("dir name must be entered");
     TcArgVal* val = args.at(1)->getAsVal();
     if (val == NULL) return args.appendError("dirname name must be entered");
-    //Cmd_refed_file_list::currentDirSet(val->value());
+
     currentDir_ = QString(val->value());
-    //Cmd_refed_file_list::currentDirSet(val->value());
 
     return 0;
 }
