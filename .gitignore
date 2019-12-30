@@ -1,0 +1,36 @@
+2016 12 00 test/
+2016 12 00 testpdf/
+addhoc_view_exe/
+all_exe/
+cad_recog_exe/
+dirser_exe/
+dirser_uiex_exe/
+exelink_exe/
+fase_exe/
+minicmds_exe/
+photo_map_exe/
+photo_plan_exe/
+recog_exe/
+*.1
+*.o
+*.stash
+*.Debug
+*.Release
+*.a
+*.0
+*.so
+*.pro.user
+*.exe
+moc_*
+Makefile*
+usersh18*
+drawing.svg
+base/debug/
+base/release/
+geogebra/debug/
+geogebra/release/
+naray/debug/
+naray/release/
+infrastructure/debug/
+infrastructure/release/
+
