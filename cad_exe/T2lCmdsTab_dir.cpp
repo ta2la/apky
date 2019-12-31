@@ -145,6 +145,7 @@ int CmdsTab_dir::tab_set_dir_browser(TcCmdContext* /*context*/, TcArgCol& /*args
         dirIt.next();
 
         if ( dirIt.fileInfo().fileName() == "." ) continue;
+        if ( dirIt.fileInfo().fileName() == "t2l" ) continue;
 
         result.append("<a href='tcview:://#cad_set_actual_dir ");
         result.append(dirIt.fileInfo().canonicalFilePath());
