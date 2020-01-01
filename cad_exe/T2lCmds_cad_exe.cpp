@@ -215,7 +215,7 @@ int Cmds_cad_exe::cmd_cad_file_activate(TcCmdContext* /*context*/, TcArgCol& arg
     GFile* file = GFileCol::instance().getByFileName(fullFileName);
     if (file == NULL) return args.appendError("wrong file name");
 
-    ActiveFile::changeActiveFile(file);
+    ActiveFile::changeActiveFile(file, false, false);
 
     return 0;
 }
@@ -303,12 +303,12 @@ int Cmds_cad_exe::cmd_cad_file_open(TcCmdContext* context, TcArgCol& args)
 
         if ( val2->getString() == "show" ) {
             WidgetInteractCol& widgets = WidgetInteractCol::instance();
-            for (int i = 0; i < widgets.count(); i++) {
+            /*for (int i = 0; i < widgets.count(); i++) {
                 delete widgets.get(i);
             }
-            widgets.clean();
+            widgets.clean();*/
 
-            ActiveFile::changeActiveFile(file, false);
+            ActiveFile::changeActiveFile(file, false, true);
 
             WidgetInteract* view = new WidgetInteract( Point2F(0, 0), 1.0/1000.0 );
             widgets.add(view);
@@ -356,7 +356,7 @@ int Cmds_cad_exe::cmd_cad_file_open(TcCmdContext* context, TcArgCol& args)
     }
 
     if (show == false) {
-        ActiveFile::changeActiveFile(file, false);
+        ActiveFile::changeActiveFile(file, false, true);
     }
 
     return 0;
